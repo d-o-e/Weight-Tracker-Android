@@ -778,3 +778,4 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 
+/gradle/
