@@ -4,11 +4,7 @@
 package com.doe.weighttracker;
 
 import static java.lang.Math.pow;
-
-import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,14 +34,15 @@ public class WeightHistory {
         }
     }
 
-
     private ArrayList<WeightData> readFromFile(String fileName) {
+        ArrayList<WeightData> readFromFile = new ArrayList<>(MAX_DAYS);
+        // TODO: 4/17/22 read lines for size and create indv. weight data
         try {
             FileInputStream fin = new FileInputStream(fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        return readFromFile;
     }
 
     class WeightData {
@@ -53,7 +50,7 @@ public class WeightHistory {
         private double height;
         private Date date;
         private double bmi;
-        private WeightStatus weightStatus;
+        private BMIStatus BMIStatus;
 
         public WeightData(double weight, Date date) {
             this.weight = weight;
@@ -63,13 +60,12 @@ public class WeightHistory {
         }
 
         private void setBMIStatus(){
-            if (bmi<=18.5) weightStatus = WeightStatus.UNDER;
-            else if (bmi<25) weightStatus =  WeightStatus.HEALTHY;
-            else if (bmi<30) weightStatus =  WeightStatus.OVER;
-            else weightStatus = WeightStatus.OBESE;
+            if (bmi<=18.5) BMIStatus = BMIStatus.UNDER;
+            else if (bmi<25) BMIStatus =  BMIStatus.HEALTHY;
+            else if (bmi<30) BMIStatus =  BMIStatus.OVER;
+            else BMIStatus = BMIStatus.OBESE;
         }
 
-
     }
-    enum WeightStatus {UNDER,HEALTHY,OVER,OBESE}
+    enum BMIStatus {UNDER,HEALTHY,OVER,OBESE}
 }
