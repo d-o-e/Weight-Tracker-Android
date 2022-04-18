@@ -45,7 +45,7 @@ public class WeightHistory {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     class WeightData {
