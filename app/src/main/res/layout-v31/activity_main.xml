@@ -28,8 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="s">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/editTextNumber"
@@ -62,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mainButtonLabel"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
