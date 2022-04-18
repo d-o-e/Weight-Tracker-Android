@@ -60,10 +60,10 @@ public class WeightHistory {
         }
 
         private void setBMIStatus(){
-            if (bmi<=18.5) BMIStatus = BMIStatus.UNDER;
-            else if (bmi<25) BMIStatus =  BMIStatus.HEALTHY;
-            else if (bmi<30) BMIStatus =  BMIStatus.OVER;
-            else BMIStatus = BMIStatus.OBESE;
+            if (bmi<=18.5) BMIStatus = WeightHistory.BMIStatus.UNDER;
+            else if (bmi<25) BMIStatus = WeightHistory.BMIStatus.HEALTHY;
+            else if (bmi<30) BMIStatus = WeightHistory.BMIStatus.OVER;
+            else BMIStatus = WeightHistory.BMIStatus.OBESE;
         }
 
     }

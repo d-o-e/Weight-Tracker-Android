@@ -14,4 +14,7 @@ public class MainActivity extends AppCompatActivity {
         WeightHistory history = new WeightHistory(this);
     }
 
+    private double heightInterpret(String height) {
+
+    }
 }
