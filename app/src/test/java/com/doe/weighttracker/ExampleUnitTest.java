@@ -1,4 +1,4 @@
-package com.example.weighttracker;
+package com.doe.weighttracker;
 
 import org.junit.Test;
 
