@@ -109,6 +109,8 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         holder.itemView.setOnLongClickListener(v->{
             history.remove(holder.getAdapterPosition());
             notifyItemRemoved(position);
+            Thread saveThread = new Thread(() -> save());
+            saveThread.start();
             return true;
         });
     }
