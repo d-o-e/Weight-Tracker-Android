@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editWeight;
-    private EditText editHeight;
-    private WeightHistory history;
+    protected EditText editHeight;
+    protected WeightHistory history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
             double weight = Double.parseDouble(editWeight.getText().toString());
             if (editHeight.isEnabled()) {
                 double height = Double.parseDouble(editHeight.getText().toString());
-                history.initHistoryFile(weight,height);
-            } else history.addToHistoryFile(weight,false);
+                history.initHistoryFile(weight, height);
+            } else if (history.addToHistoryFile(weight, false))
+                Toast.makeText(this, weight + " added", Toast.LENGTH_SHORT).show();
         });
         showHistory.setOnClickListener(this::showHistory);
 

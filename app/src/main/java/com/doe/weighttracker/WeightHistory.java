@@ -11,15 +11,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -28,21 +24,28 @@ import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightViewHolder> {
     private static final int MAX_DAYS = 365;
     private String fileName;
     private static double height;
     private ArrayList<WeightData> history;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy",Locale.US);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy", Locale.US);
 
     public WeightHistory(Context context) {
         fileName = context.getFilesDir() + "/myWHistory";
         history = readFromFile();
+        if (!history.isEmpty() && context instanceof MainActivity) {
+            ((MainActivity) context).editHeight.setEnabled(false);
+            ((MainActivity) context).editHeight.setVisibility(View.GONE);
+        }
     }
 
     private ArrayList<WeightData> readFromFile() {
@@ -75,7 +78,8 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
 
     public void initHistoryFile(double weight, double height) {
         WeightHistory.height = height;
-        addToHistoryFile(weight,true);
+
+        addToHistoryFile(weight, true);
     }
 
     @NonNull
@@ -87,23 +91,26 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
 
     @Override
     public void onBindViewHolder(@NonNull WeightViewHolder holder, int position) {
-        StringBuilder line = new StringBuilder(new String(history.get(position).toString()));
+        StringBuilder line = new StringBuilder(history.get(position).toString());
         String[] data = line.toString().split(",");
         line = new StringBuilder();
         data[0] += ", ";
         data[1] = data[2] + " LBS, ";
-        data[2] = "BMI: " + data[3]+", ";
+        data[2] = "BMI: " + data[3] + ", ";
         data[3] = data[4] + " WEIGHT";
         data[4] = "";
         for (String temp : data) line.append(temp);
         holder.weightHistoryEntryText.setText(line.toString());
         if (data[3].startsWith("U")) holder.itemView.setBackground(new ColorDrawable(Color.BLUE));
         else if (data[3].startsWith("H")) holder.itemView.setBackground(new ColorDrawable(Color.GREEN));
-        else if (data[3].startsWith("O") && data[3].length()<12) holder.itemView.setBackground(new ColorDrawable(Color.YELLOW));
+        else if (data[3].startsWith("O") && data[3].length() < 12)
+            holder.itemView.setBackground(new ColorDrawable(Color.YELLOW));
         else holder.itemView.setBackground(new ColorDrawable(Color.RED));
-        /*holder.parent.setOnClickListener(v->{
-            TextView entry = v.findViewById(R.id.weightHistoryEntryTextView);
-        });*/
+        holder.itemView.setOnLongClickListener(v->{
+            history.remove(holder.getAdapterPosition());
+            notifyItemRemoved(position);
+            return true;
+        });
     }
 
     @Override
@@ -111,18 +118,30 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         return history.size();
     }
 
-    public void addToHistoryFile(double weight,boolean initializeHistory) {
+    public boolean addToHistoryFile(double weight, boolean initializeHistory) {
         WeightData weightData = new WeightData(weight);
         try {
-            Files.write(Paths.get(fileName), (weightData.toString()+'\n').getBytes(StandardCharsets.UTF_8), (initializeHistory ? StandardOpenOption.CREATE : StandardOpenOption.APPEND));
+            Files.write(Paths.get(fileName), (weightData.toString() + '\n').getBytes(StandardCharsets.UTF_8), (initializeHistory ? StandardOpenOption.CREATE : StandardOpenOption.APPEND));
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
     }
 
     public double getHeight() {
         return WeightHistory.height;
+    }
+
+    public void save() {
+        for (WeightData wData : history) {
+            try {
+                Files.write(Paths.get(fileName), (wData.toString() + '\n').getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private class WeightData {
@@ -136,6 +155,13 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
             this.date = date;
             this.bmi = bmi;
             this.BMIStatus = BMIStatus;
+        }
+
+        private WeightData(WeightData weightData) {
+            this.weight = weightData.weight;
+            this.date = weightData.date;
+            this.bmi = weightData.bmi;
+            this.BMIStatus = weightData.BMIStatus;
         }
 
         public WeightData(double weight) {
@@ -159,7 +185,7 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         @NonNull
         @Override
         public String toString() {
-            return dateFormat.format(date) + ","+height+',' + weight + ',' + bmi + ',' + BMIStatus;
+            return dateFormat.format(date) + "," + height + ',' + weight + ',' + bmi + ',' + BMIStatus;
         }
     }
 
