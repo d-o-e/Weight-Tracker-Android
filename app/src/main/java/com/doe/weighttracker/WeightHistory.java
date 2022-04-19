@@ -6,6 +6,8 @@ package com.doe.weighttracker;
 import static java.lang.Math.pow;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +88,7 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
     @Override
     public void onBindViewHolder(@NonNull WeightViewHolder holder, int position) {
         StringBuilder line = new StringBuilder(new String(history.get(position).toString()));
-        String[] data = line.toString().toString().split(",");
+        String[] data = line.toString().split(",");
         line = new StringBuilder();
         data[0] += ", ";
         data[1] = data[2] + " LBS, ";
@@ -95,6 +97,10 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         data[4] = "";
         for (String temp : data) line.append(temp);
         holder.weightHistoryEntryText.setText(line.toString());
+        if (data[3].startsWith("U")) holder.itemView.setBackground(new ColorDrawable(Color.BLUE));
+        else if (data[3].startsWith("H")) holder.itemView.setBackground(new ColorDrawable(Color.GREEN));
+        else if (data[3].startsWith("O") && data[3].length()<12) holder.itemView.setBackground(new ColorDrawable(Color.YELLOW));
+        else holder.itemView.setBackground(new ColorDrawable(Color.RED));
         /*holder.parent.setOnClickListener(v->{
             TextView entry = v.findViewById(R.id.weightHistoryEntryTextView);
         });*/

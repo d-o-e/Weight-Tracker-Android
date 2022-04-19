@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             heightText.setEnabled(true);
             heightText.setVisibility(View.VISIBLE);
-            heightText.setText(heightText.getText().toString() +
-                    history.getHeight() + " in");
+            String heightStr = heightText.getText().toString() +
+                    history.getHeight() + " in";
+            heightText.setText(heightStr);
             editHeight.setEnabled(false);
             editHeight.setVisibility(View.GONE);
 
