@@ -12,8 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="@string/mainwelcometext"
+        android:text="@string/mainWelcomeText"
         android:textAlignment="center"
+        android:textColor="@color/natural"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linear_data_entry_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.80" />
+
+    <TextView
+        android:id="@+id/mainHeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/mainHeightText"
         android:textColor="@color/natural"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linear_data_entry_layout"
@@ -28,25 +42,25 @@
         android:layout_height="wrap_content"
         android:background="#BEB6B7B8"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/showHistoryButtonView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeText">
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/enterWeightTextView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="8"
             android:hint="@string/weight_hint"
             android:importantForAutofill="no"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textAlignment="center"
             tools:ignore="TextContrastCheck" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal"
+            android:id="@+id/enterHeightTextView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="8"
@@ -57,7 +71,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/addDataButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
@@ -67,7 +81,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/showHistoryButtonView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

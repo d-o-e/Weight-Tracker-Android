@@ -4,14 +4,16 @@
     android:id="@+id/linearHistoryLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/weightHistoryEntryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#BF3C3C3C"
+        android:fontFamily="sans-serif-medium"
         android:hint="@string/entry_data"
-        android:textSize="16sp"
-        tools:ignore="TextContrastCheck" />
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 </LinearLayout>

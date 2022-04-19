@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Weight Tracker</string>
-    <string name="mainwelcometext">Please add your weight and height below</string>
+    <string name="mainWelcomeText">Please add your weight (and height) below</string>
     <string name="mainButtonLabel">Add</string>
     <string name="height_hint">Enter Your Height</string>
     <string name="weight_hint">Enter Your Weight</string>
     <string name="entry_data">Entry Values</string>
+    <string name="mainHeightText">"Your Height : "</string>
 </resources>
