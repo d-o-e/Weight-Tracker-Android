@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,9 +32,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightViewHolder> {
     private static final int MAX_DAYS = 365;
-    private String fileName;
+    private final String fileName;
     private static double height;
-    private ArrayList<WeightData> history;
+    private final ArrayList<WeightData> history;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy", Locale.US);
 
     public WeightHistory(Context context) {
@@ -109,7 +107,7 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         holder.itemView.setOnLongClickListener(v->{
             history.remove(holder.getAdapterPosition());
             notifyItemRemoved(position);
-            Thread saveThread = new Thread(() -> save());
+            Thread saveThread = new Thread(this::save);
             saveThread.start();
             return true;
         });
@@ -157,13 +155,6 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
             this.date = date;
             this.bmi = bmi;
             this.BMIStatus = BMIStatus;
-        }
-
-        private WeightData(WeightData weightData) {
-            this.weight = weightData.weight;
-            this.date = weightData.date;
-            this.bmi = weightData.bmi;
-            this.BMIStatus = weightData.BMIStatus;
         }
 
         public WeightData(double weight) {
