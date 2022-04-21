@@ -1,10 +1,9 @@
-/**
+/*
  * @author Deniz Erisgen ©
- **/
+ */
 package com.doe.weighttracker;
 
 import static java.lang.Math.pow;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -74,12 +73,6 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         return historyFromFile;
     }
 
-    public void initHistoryFile(double weight, double height) {
-        WeightHistory.height = height;
-
-        addToHistoryFile(weight, true);
-    }
-
     @NonNull
     @Override
     public WeightViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -118,16 +111,27 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         return history.size();
     }
 
-    public boolean addToHistoryFile(double weight, boolean initializeHistory) {
+    public boolean addToHistoryFile(double weight) {
         WeightData weightData = new WeightData(weight);
         try {
-            Files.write(Paths.get(fileName), (weightData.toString() + '\n').getBytes(StandardCharsets.UTF_8), (initializeHistory ? StandardOpenOption.CREATE : StandardOpenOption.APPEND));
+            Files.write(Paths.get(fileName), (weightData.toString() + '\n').getBytes(StandardCharsets.UTF_8), (StandardOpenOption.APPEND));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+    }
 
+    public boolean addToHistoryFile(double weight, double height) {
+        WeightHistory.height = height;
+        WeightData weightData = new WeightData(weight);
+        try {
+            Files.write(Paths.get(fileName), (weightData.toString() + '\n').getBytes(StandardCharsets.UTF_8), (StandardOpenOption.CREATE ));
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public double getHeight() {
