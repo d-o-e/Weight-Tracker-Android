@@ -28,7 +28,6 @@ import java.util.Scanner;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightViewHolder> {
     private static final int MAX_DAYS = 365;
     private final String fileName;
@@ -137,7 +136,6 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
     }
 
     public void save() {
-        // TODO: 4/20/2022 how to reset the file because every loop it's writing over
         try {
             Files.write(Paths.get(fileName), new byte[]{});
         } catch (IOException e) {

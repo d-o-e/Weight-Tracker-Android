@@ -49,7 +49,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         addData.setOnClickListener(view -> {
-            // TODO: 4/20/2022 check for empty
+            if (editWeight.getText().toString().isEmpty() ||
+                    (editHeight.isEnabled() &&
+                            editHeight.getText().toString().isEmpty())) {
+                Toast.makeText(this, "Please check your input",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             double weight = Double.parseDouble(editWeight.getText().toString());
             if (Double.isNaN(weight) || weight < 0) return;
 
