@@ -21,4 +21,11 @@ public class HistoryViewer extends AppCompatActivity {
         historyRecycleView.addItemDecoration(new DividerItemDecoration(historyRecycleView.getContext(), DividerItemDecoration.VERTICAL));
         historyRecycleView.setAdapter(history);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Thread saveThread = new Thread(() -> history.save());
+        saveThread.start();
+    }
 }

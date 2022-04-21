@@ -100,8 +100,6 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
         holder.itemView.setOnLongClickListener(v->{
             history.remove(holder.getAdapterPosition());
             notifyItemRemoved(position);
-            Thread saveThread = new Thread(this::save);
-            saveThread.start();
             return true;
         });
     }
@@ -139,9 +137,15 @@ public class WeightHistory extends RecyclerView.Adapter<WeightHistory.WeightView
     }
 
     public void save() {
+        // TODO: 4/20/2022 how to reset the file because every loop it's writing over
+        try {
+            Files.write(Paths.get(fileName), new byte[]{});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (WeightData wData : history) {
             try {
-                Files.write(Paths.get(fileName), (wData.toString() + '\n').getBytes(StandardCharsets.UTF_8));
+                Files.write(Paths.get(fileName), (wData.toString() + '\n').getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
             } catch (IOException e) {
                 e.printStackTrace();
             }

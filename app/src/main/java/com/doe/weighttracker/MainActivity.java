@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         addData.setOnClickListener(view -> {
+            // TODO: 4/20/2022 check for empty
             double weight = Double.parseDouble(editWeight.getText().toString());
             if (Double.isNaN(weight) || weight < 0) return;
 
