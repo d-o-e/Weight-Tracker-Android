@@ -91,14 +91,13 @@ This is the main class of the app (Home).
 ## GUI
 
 ### Data Entry View (Home Screen)
-![](ss/home.png)
-![](ss/data_entry.png)
-![](ss/home-init.png)
+  <img src="ss/home.png" width="500"> <img src="ss/data_entry.png" width="500">
+<img src="ss/home-init.png" width="500">
+
 
 ### History View
 
 Every entry has a custom color set at creation based on their BMI Status. Holding down a row will remove it
 from history.
-
-![](ss/fulllist.png)
-![](ss/endlist.png)
+<img src="ss/fulllist.png" width="500">
+  <img src="ss/endlist.png" width="500">
